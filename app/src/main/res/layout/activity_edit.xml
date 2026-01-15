@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    tools:context=".EditActivity">
+
+    <Button
+        android:id="@+id/btnTestNav"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/test"
+        android:backgroundTint="@color/brown"
+        android:layout_marginTop="16dp"/>
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginBottom="24dp"
+        android:backgroundTint="@color/brown"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="10dp"
+        android:text="@string/btnTornar" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:fontFamily="@font/baloo2_extrabold"
+        android:text="@string/tvEditarTasca"
+        android:textAllCaps="true"
+        android:textSize="40sp" />
+
+    <EditText
+        android:id="@+id/etName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:background="@android:drawable/edit_text"
+        android:hint="@string/etNom"
+        android:padding="12dp"
+        android:textSize="16sp"
+        android:inputType="textPersonName"
+        android:autofillHints="name"/>
+
+    <EditText
+        android:id="@+id/etDescripcio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:background="@android:drawable/edit_text"
+        android:hint="@string/etDescripcio"
+        android:padding="12dp"
+        android:textSize="16sp"
+        android:inputType="text"
+        android:autofillHints="name"/>
+
+    <EditText
+        android:id="@+id/etDataLimit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:background="@android:drawable/edit_text"
+        android:hint="@string/etDataLimit"
+        android:inputType="date"
+        android:padding="12dp"
+        android:autofillHints="creditCardExpirationDate"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/etRecordatori"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:background="@android:drawable/edit_text"
+        android:hint="@string/etRecordatori"
+        android:inputType="date"
+        android:padding="12dp"
+        android:textSize="16sp"
+        android:autofillHints="creditCardExpirationDate"/>
+
+    <EditText
+        android:id="@+id/etPrioritat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:background="@android:drawable/edit_text"
+        android:hint="@string/etPrioritat"
+        android:padding="12dp"
+        android:textSize="16sp"
+        android:inputType="text"
+        android:autofillHints="name"/>
+
+    <EditText
+        android:id="@+id/etLlista"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:background="@android:drawable/edit_text"
+        android:hint="@string/etLlista"
+        android:padding="12dp"
+        android:textSize="16sp"
+        android:inputType="text"
+        android:autofillHints="name"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp">
+
+        <Button
+            android:id="@+id/btnCancelar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/btnCancelar"
+            android:backgroundTint="@color/brown"
+            android:textSize="18sp"
+            android:paddingHorizontal="24dp"
+            android:paddingVertical="12dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btnDesar"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_weight="1"
+            android:layout_marginEnd="8dp"/>
+
+        <Button
+            android:id="@+id/btnDesar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/btnDesar"
+            android:backgroundTint="@color/brown"
+            android:textSize="18sp"
+            android:paddingHorizontal="24dp"
+            android:paddingVertical="12dp"
+            app:layout_constraintStart_toEndOf="@id/btnCancelar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_weight="1" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
+

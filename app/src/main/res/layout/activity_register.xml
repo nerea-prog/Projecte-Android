@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp"
+    tools:context=".RegisterActivity">
+
+    <Button
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/btnTestNav"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/test"
+        android:backgroundTint="@color/brown"
+        android:layout_marginTop="16dp"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btnTornar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/brown"
+            android:text="@string/btnTornar" />
+
+        <TextView
+            android:id="@+id/tvRegister"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:fontFamily="@font/baloo2_extrabold"
+            android:text="@string/tvRegister"
+            android:textAllCaps="true"
+            android:textSize="40sp" />
+
+        <EditText
+            android:id="@+id/etName"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:minHeight="48dp"
+            android:layout_marginTop="40dp"
+            android:hint="@string/etNom"
+            android:padding="10dp"
+            android:inputType="textPersonName"
+            android:autofillHints="name"/>
+
+        <EditText
+            android:id="@+id/etGmail"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:minHeight="48dp"
+            android:layout_marginTop="15dp"
+            android:hint="@string/tvEmail"
+            android:padding="10dp"
+            android:inputType="textEmailAddress"
+            android:autofillHints="emailAddress"
+            android:maxWidth="400dp"/>
+
+
+        <EditText
+            android:id="@+id/etPassword"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:minHeight="48dp"
+            android:layout_marginTop="15dp"
+            android:hint="@string/tvPassword"
+            android:padding="10dp"
+            android:inputType="textPassword"
+            android:autofillHints="password"
+            android:textColor="@color/black"
+            android:textColorHint="@android:color/darker_gray"/>
+
+        <EditText
+            android:id="@+id/etPasswordConfirm"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:minHeight="48dp"
+            android:layout_marginTop="15dp"
+            android:hint="@string/tvconfirmPassword"
+            android:padding="10dp"
+            android:textColor="@color/black"
+            android:textColorHint="@android:color/darker_gray"
+            android:inputType="textPassword"
+            android:autofillHints="password"/>
+
+        <Button
+            android:backgroundTint="@color/brown"
+            android:id="@+id/btnRegistre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="40dp"
+            android:paddingHorizontal="30dp"
+            android:paddingVertical="15dp"
+            android:paddingBottom="30dp"
+            android:text="@string/btnRegistre"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

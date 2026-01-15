@@ -1,0 +1,62 @@
+<resources>
+    <string name="app_name">ACT7_Menu_Llista_filtre</string>
+    <string name="app_name1">taskbuddy</string>
+    <string name="login_text">Accedeix al teu compte</string>
+    <string name="username_hint">Usuari</string>
+    <string name="password_hint">Contrasenya</string>
+    <string name="register_text">Registra\'t</string>
+    <string name="cat_icon">Logo de TaskBuddy</string>
+    <string name="guest_text">Continua com invitat</string>
+    <string name="login_button">inicia sessió</string>
+
+    <string name="settings">configuració</string>
+    <string name="greetings">Hola, Usuari</string>
+    <string name="search_hint">buscar</string>
+    <string name="cat_image">gat</string>
+    <string name="btn_avui_text">avui</string>
+    <string name="btn_tot_text">tot</string>
+    <string name="btn_fet_text">fet</string>
+    <string name="btn_calendari_text">calendari</string>
+    <string name="btn_customize_cat">gat</string>
+    <string name="btn_customize_cat_desc">Configuració del gat</string>
+    <string name="catname_test">Chulin</string>
+    <string name="tvnewTask">Nova Tasca</string>
+    <string name="tvnewList">Nova Llista</string>
+
+    <string name="tutorial_title">tutorial ràpid</string>
+    <string name="btn_entes_text">entés</string>
+    <string name="help_avui">Aquí pots veure les tasques previstes per avui.</string>
+    <string name="help_tot">Visualitza totes les tasques pendents.</string>
+    <string name="help_fet">Consulta les tasques ja completades.</string>
+    <string name="help_calendari">Mostra les tasques organitzades per data.</string>
+
+    <string name="tvRegister">Registrament</string>
+    <string name="btnRegistre">Registrar-se</string>
+    <string name="tvconfirmPassword">Confirma la contrasenya</string>
+    <string name="tvPassword">Contrasenya</string>
+    <string name="tvEmail">Email</string>
+    <string name="etNom">Nom</string>
+    <string name="btnTornar">Tornar</string>
+    <string name="tvCompleteRegistre">usuari\nregistrat\ncorrectament!</string>
+    <string name="btnContinue">Continuar</string>
+    <string name="tvAnimacio">tu pots</string>
+    <string name="tvNovaTasca">Nova tasca</string>
+    <string name="tvTasquesDeAvui">Tasques d\'avui</string>
+    <string name="tvEditarTasca">Editar tasca:</string>
+    <string name="etDescripcio">Descripció</string>
+    <string name="etDataLimit">Data limit</string>
+    <string name="etRecordatori">Recordatori</string>
+    <string name="etPrioritat">Prioritat</string>
+    <string name="etLlista">Llista</string>
+    <string name="tvNom">Nom</string>
+    <string name="tvPreferencies">Preferències</string>
+    <string name="tvIdioma">Idioma</string>
+    <string name="tvTema">Tema</string>
+    <string name="tvConfiguracio">Configuració</string>
+    <string name="tvswitchNotificacions">Activa notificicacions   </string>
+    <string name="btnCancelar">Cancel·lar</string>
+    <string name="btnDesar">Desar</string>
+    <string name="description_user">Foto de perfil d\'una persona\n</string>
+    <string name="test">TEST</string>
+
+</resources>

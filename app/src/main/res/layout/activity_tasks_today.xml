@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="25dp"
+    tools:context=".TasksTodayActivity">
+    <Button
+        android:id="@+id/btnTestNav"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/test"
+        android:backgroundTint="@color/brown"
+        android:layout_marginTop="16dp"/>
+
+
+    <Button
+        android:id="@+id/btnTornar"
+        android:backgroundTint="@color/brown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btnTornar" />
+
+    <TextView
+        android:fontFamily="@font/baloo2_extrabold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:textSize="30sp"
+        android:textAllCaps="true"
+        android:text="@string/tvTasquesDeAvui"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvListToday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp" />
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+    <TextView
+        android:id="@+id/tvNovaTasca"
+        android:fontFamily="@font/baloo2_bold"
+        android:text="@string/tvNovaTasca"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:minHeight="48dp"
+        android:paddingVertical="8dp"
+        android:layout_gravity="end"
+        android:layout_marginTop="25dp"
+        android:textSize="20sp"
+        android:clickable="true"
+        android:focusable="true"/>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp">
+
+        <ImageView
+            android:id="@+id/imgCat"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="30dp"
+            android:src="@drawable/gatodepie"
+            android:contentDescription="@string/cat_image"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:fontFamily="@font/baloo2_medium"
+            android:id="@+id/tvAnimacio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="35dp"
+            android:text="@string/tvAnimacio"
+            android:textAllCaps="true"
+            android:textSize="25sp"
+            app:layout_constraintBottom_toBottomOf="@+id/imgCat"
+            app:layout_constraintStart_toEndOf="@+id/imgCat"
+            app:layout_constraintTop_toTopOf="@+id/imgCat" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
