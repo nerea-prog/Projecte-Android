@@ -1,103 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:padding="25dp"
     tools:context=".TasksTodayActivity">
+
     <Button
         android:id="@+id/btnTestNav"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/test"
+        android:layout_marginTop="16dp"
         android:backgroundTint="@color/brown"
-        android:layout_marginTop="16dp"/>
-
+        android:text="@string/test"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btnTornar"
-        android:backgroundTint="@color/brown"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/btnTornar" />
+        android:backgroundTint="@color/brown"
+        android:text="@string/btnTornar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnTestNav" />
 
     <TextView
-        android:fontFamily="@font/baloo2_extrabold"
+        android:id="@+id/tvTasquesDeAvui"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:textSize="30sp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/baloo2_extrabold"
+        android:text="@string/tvTasquesDeAvui"
         android:textAllCaps="true"
-        android:text="@string/tvTasquesDeAvui"/>
+        android:textSize="30sp"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnTornar" />
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardRecyclerView"
+        android:layout_width="0dp"
+        android:layout_height="250dp"
+        android:layout_marginTop="15dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="4dp"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTasquesDeAvui">
 
-        <LinearLayout
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvListToday"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:padding="8dp" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvListToday"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp" />
-
-
-        </LinearLayout>
-    </ScrollView>
-
+    </androidx.cardview.widget.CardView>
 
     <TextView
         android:id="@+id/tvNovaTasca"
-        android:fontFamily="@font/baloo2_bold"
-        android:text="@string/tvNovaTasca"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
+        android:layout_marginTop="5dp"
+        android:paddingEnd="20dp"
+        android:paddingStart="20dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:fontFamily="@font/baloo2_bold"
         android:minHeight="48dp"
         android:paddingVertical="8dp"
-        android:layout_gravity="end"
-        android:layout_marginTop="25dp"
+        android:text="@string/tvNovaTasca"
         android:textSize="20sp"
-        android:clickable="true"
-        android:focusable="true"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cardRecyclerView" />
 
+    <ImageView
+        android:id="@+id/imgCat"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="30dp"
+        android:contentDescription="@string/cat_image"
+        android:src="@drawable/gatodepie"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvNovaTasca" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <TextView
+        android:id="@+id/tvAnimacio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp">
+        android:layout_marginStart="35dp"
+        android:fontFamily="@font/baloo2_medium"
+        android:text="@string/tvAnimacio"
+        android:textAllCaps="true"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toBottomOf="@id/imgCat"
+        app:layout_constraintStart_toEndOf="@id/imgCat"
+        app:layout_constraintTop_toTopOf="@id/imgCat" />
 
-        <ImageView
-            android:id="@+id/imgCat"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="30dp"
-            android:src="@drawable/gatodepie"
-            android:contentDescription="@string/cat_image"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
-        <TextView
-            android:fontFamily="@font/baloo2_medium"
-            android:id="@+id/tvAnimacio"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="35dp"
-            android:text="@string/tvAnimacio"
-            android:textAllCaps="true"
-            android:textSize="25sp"
-            app:layout_constraintBottom_toBottomOf="@+id/imgCat"
-            app:layout_constraintStart_toEndOf="@+id/imgCat"
-            app:layout_constraintTop_toTopOf="@+id/imgCat" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

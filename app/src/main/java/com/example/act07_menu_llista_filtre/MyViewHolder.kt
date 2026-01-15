@@ -6,16 +6,20 @@ import androidx.recyclerview.widget.RecyclerView
 
 class MyViewHolder(
     itemView: View,
-    private val onItemClick: (MyItem) -> Unit
 ) : RecyclerView.ViewHolder(itemView) {
 
     private val tvTitle: TextView = itemView.findViewById(R.id.tvTitle)
 
-    fun bind(item: MyItem) {
+    fun bind(item: MyItem, position: Int, onItemClick: (MyItem, Int) -> Unit) {
         tvTitle.text = item.title
 
         itemView.setOnClickListener {
-            onItemClick(item)
+            onItemClick(item, position)
         }
+
+        /*itemView.setOnLongClickListener {
+            onItemClick(item, position)
+            true
+        }*/
     }
 }
