@@ -2,9 +2,19 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.ACT07_Menu_Llista_filtre" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="android:windowBackground">@color/floral_white</item>
         <item name="colorPrimary">@color/brown</item>
-        <item name="colorPrimaryVariant">@color/brown</item>
+        <item name="colorSecondary">@color/brown</item>
+        <item name="colorSurface">@color/floral_white</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="android:fontFamily">@font/baloo2_bold</item>
+        <item name="buttonStyle">@style/Widget.MyApp.Button</item>
+    </style>
+
+    <style name="Widget.MyApp.Button" parent="Widget.Material3.Button">
+        <item name="backgroundTint">@color/brown</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:fontFamily">@font/baloo2_bold</item>
     </style>
 
     <style name="Theme.ACT07_Menu_Llista_filtre" parent="Base.Theme.ACT07_Menu_Llista_filtre" />

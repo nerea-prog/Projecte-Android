@@ -13,12 +13,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/test"
-        android:backgroundTint="@color/brown"
         android:layout_marginTop="16dp"/>
 
-
     <Button
-        android:backgroundTint="@color/brown"
         android:id="@+id/btnTornar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -55,8 +55,6 @@
                 android:text="@string/btn_avui_text"
                 android:textAllCaps="true"
                 android:textSize="16sp"
-                android:fontFamily="@font/baloo2_extrabold"
-                android:backgroundTint="@color/brown"
                 android:textColor="@color/white" />
 
             <TextView
@@ -66,7 +64,6 @@
                 android:layout_weight="1"
                 android:text="@string/help_avui"
                 android:textSize="15sp"
-                android:fontFamily="@font/baloo2_regular"
                 android:textColor="@color/brown"
                 android:padding="10dp" />
         </LinearLayout>
@@ -87,8 +84,6 @@
                 android:text="@string/btn_tot_text"
                 android:textAllCaps="true"
                 android:textSize="16sp"
-                android:fontFamily="@font/baloo2_extrabold"
-                android:backgroundTint="@color/brown"
                 android:textColor="@color/white" />
 
             <TextView
@@ -99,7 +94,6 @@
                 android:text="@string/help_tot"
                 android:textSize="15sp"
                 android:textColor="@color/brown"
-                android:fontFamily="@font/baloo2_regular"
                 android:padding="10dp" />
         </LinearLayout>
 
@@ -119,8 +113,6 @@
                 android:text="@string/btn_fet_text"
                 android:textAllCaps="true"
                 android:textSize="16sp"
-                android:fontFamily="@font/baloo2_extrabold"
-                android:backgroundTint="@color/brown"
                 android:textColor="@color/white" />
 
             <TextView
@@ -131,7 +123,6 @@
                 android:text="@string/help_fet"
                 android:textSize="15sp"
                 android:textColor="@color/brown"
-                android:fontFamily="@font/baloo2_regular"
                 android:padding="10dp" />
         </LinearLayout>
 
@@ -151,8 +142,6 @@
                 android:text="@string/btn_calendari_text"
                 android:textAllCaps="true"
                 android:textSize="15sp"
-                android:fontFamily="@font/baloo2_extrabold"
-                android:backgroundTint="@color/brown"
                 android:textColor="@color/white" />
 
             <TextView
@@ -163,7 +152,6 @@
                 android:text="@string/help_calendari"
                 android:textSize="15sp"
                 android:textColor="@color/brown"
-                android:fontFamily="@font/baloo2_regular"
                 android:padding="10dp" />
         </LinearLayout>
 
@@ -176,8 +164,6 @@
         android:text="@string/btn_entes_text"
         android:textAllCaps="true"
         android:textSize="18sp"
-        android:fontFamily="@font/baloo2_extrabold"
-        android:backgroundTint="@color/brown"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="80dp"
