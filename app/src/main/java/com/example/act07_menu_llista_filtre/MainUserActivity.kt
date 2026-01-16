@@ -15,6 +15,9 @@ import androidx.appcompat.app.AlertDialog
 import com.google.android.material.textfield.TextInputEditText
 import android.text.TextWatcher
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
+import androidx.appcompat.widget.Toolbar
 
 class MainUserActivity : AppCompatActivity() {
     private lateinit var btnTestNav: Button
@@ -22,13 +25,58 @@ class MainUserActivity : AppCompatActivity() {
     private lateinit var adapter: MyAdapter
     private lateinit var etSearch: TextInputEditText
 
+    private lateinit var toolbar: Toolbar
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_user)
         setupRecyclerView()
         setupSearchFilter()
+        setupToolbar()
         initComponents()
         initListeners()
+    }
+
+    private fun setupToolbar() {
+        toolbar = findViewById(R.id.my_toolbar)
+        setSupportActionBar(toolbar)
+        supportActionBar?.title = "Les Meves Tasques"
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId){
+            R.id.action_inici -> {
+                Toast.makeText(this, "Anant al Inici", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, MainUserActivity::class.java)
+                startActivity(intent)
+                true
+            }
+            R.id.action_configuracio -> {
+                Toast.makeText(this, "Anant a configuració", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, ConfigurationActivity::class.java)
+                startActivity(intent)
+                true
+            }
+            R.id.action_sobre -> {
+                mostrarDialogSobre()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun mostrarDialogSobre() {
+        AlertDialog.Builder(this)
+            .setTitle("Sobre l'aplicació")
+            .setMessage("Aplicació que gestiona les tasques")
+            .setPositiveButton("Tancar", null)
+            .show()
     }
 
     private fun setupSearchFilter() {
