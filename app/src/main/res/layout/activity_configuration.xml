@@ -6,30 +6,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="24dp"
     tools:context=".ConfigurationActivity">
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/my_toolbar"
-        android:layout_width="0dp"
         android:layout_height="100dp"
-        android:paddingTop="40dp"
+        android:layout_width="match_parent"
         android:background="?attr/colorPrimary"
         android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.Material3.ActionBar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:theme="@style/ThemeOverlay.Material3.ActionBar" />
+
     <Button
         android:id="@+id/btnTestNav"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/test"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"/>
 
     <Button
         android:id="@+id/btnTornar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
         android:text="@string/btnTornar" />
 
     <TextView
@@ -40,6 +39,8 @@
         android:layout_marginTop="20dp"
         android:textAllCaps="true"
         android:textSize="30sp"
+        android:textColor="@color/brown"
+        android:layout_marginStart="24dp"
         android:text="@string/tvConfiguracio" />
 
     <ImageView
@@ -47,7 +48,7 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_gravity="center"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="12dp"
         android:src="@drawable/ic_user"
         android:contentDescription="@string/description_user"/>
 
@@ -56,7 +57,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:textAllCaps="true"
         android:textSize="20sp"
         android:text="@string/tvNom"/>
 
@@ -65,7 +65,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:textSize="20sp"
+        android:textSize="15sp"
         android:text="@string/tvEmail"/>
 
     <TextView
@@ -73,62 +73,83 @@
         android:id="@+id/tvPreferencies"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="24dp"
         android:textAllCaps="true"
         android:textSize="30sp"
+        android:textColor="@color/brown"
         android:text="@string/tvPreferencies"/>
 
-    <androidx.appcompat.widget.SwitchCompat
-        android:fontFamily="@font/baloo2_medium"
-        android:id="@+id/switchNotificacions"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="25sp"
-        android:text="@string/tvswitchNotificacions"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp">
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        android:layout_marginTop="8dp">
 
+        <!-- Notificaciones (Switch) -->
         <TextView
-            android:fontFamily="@font/baloo2_medium"
-            android:id="@+id/tvIdioma"
-            android:layout_width="wrap_content"
+            android:id="@+id/tvNotificacions"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textSize="25sp"
+            android:textSize="20sp"
+            android:text="@string/tvswitchNotificacions"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/switchNotificacions"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="@string/tvIdioma"/>
+            app:layout_constraintHorizontal_bias="0" />
 
-        <Spinner
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switchNotificacions"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
-            android:minHeight="48dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="5dp"
-            app:layout_constraintStart_toEndOf="@+id/tvIdioma"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:padding="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvNotificacions"
+            app:layout_constraintBottom_toBottomOf="@+id/tvNotificacions" />
 
+        <!-- Idioma -->
         <TextView
-            android:fontFamily="@font/baloo2_medium"
-            android:id="@+id/tvTema"
-            android:layout_width="wrap_content"
+            android:id="@+id/tvIdioma"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:textSize="25sp"
+            android:textSize="20sp"
+            android:text="@string/tvIdioma"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvIdioma"
-            android:text="@string/tvTema"/>
+            app:layout_constraintEnd_toStartOf="@+id/spinnerIdioma"
+            app:layout_constraintTop_toBottomOf="@+id/tvNotificacions"
+            android:layout_marginTop="16dp"
+            app:layout_constraintHorizontal_bias="0" />
 
         <Spinner
+            android:id="@+id/spinnerIdioma"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
-            android:minHeight="48dp"
-            android:layout_marginStart="55dp"
-            android:layout_marginTop="15dp"
-            app:layout_constraintStart_toEndOf="@+id/tvTema"
-            app:layout_constraintTop_toBottomOf="@+id/tvIdioma" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvIdioma"
+            app:layout_constraintBottom_toBottomOf="@+id/tvIdioma" />
+
+        <!-- Tema -->
+        <TextView
+            android:id="@+id/tvTema"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="@string/tvTema"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/spinnerTema"
+            app:layout_constraintTop_toBottomOf="@+id/tvIdioma"
+            android:layout_marginTop="16dp"
+            app:layout_constraintHorizontal_bias="0" />
+
+        <Spinner
+            android:id="@+id/spinnerTema"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvTema"
+            app:layout_constraintBottom_toBottomOf="@+id/tvTema" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

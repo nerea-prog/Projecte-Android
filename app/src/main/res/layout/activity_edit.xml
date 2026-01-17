@@ -7,34 +7,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="24dp"
     tools:context=".EditActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/my_toolbar"
-        android:layout_width="0dp"
         android:layout_height="100dp"
-        android:paddingTop="40dp"
+        android:layout_width="match_parent"
         android:background="?attr/colorPrimary"
         android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.Material3.ActionBar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:theme="@style/ThemeOverlay.Material3.ActionBar" />
 
     <Button
         android:id="@+id/btnTestNav"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/test"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="24dp"/>
 
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
-        android:layout_marginBottom="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginBottom="12dp"
         android:paddingHorizontal="20dp"
         android:paddingVertical="10dp"
         android:text="@string/btnTornar" />
@@ -42,9 +39,11 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="12dp"
+        android:layout_marginStart="24dp"
         android:fontFamily="@font/baloo2_extrabold"
         android:text="@string/tvEditarTasca"
+        android:textColor="@color/brown"
         android:textAllCaps="true"
         android:textSize="40sp" />
 
@@ -52,9 +51,12 @@
         android:id="@+id/etName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:maxWidth="360dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
         android:background="@android:drawable/edit_text"
         android:hint="@string/etNom"
+        android:textColorHint="@color/black"
         android:padding="12dp"
         android:textSize="16sp"
         android:inputType="textPersonName"
@@ -64,9 +66,12 @@
         android:id="@+id/etDescripcio"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:maxWidth="360dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
         android:background="@android:drawable/edit_text"
         android:hint="@string/etDescripcio"
+        android:textColorHint="@color/black"
         android:padding="12dp"
         android:textSize="16sp"
         android:inputType="text"
@@ -76,9 +81,12 @@
         android:id="@+id/etDataLimit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:maxWidth="360dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
         android:background="@android:drawable/edit_text"
         android:hint="@string/etDataLimit"
+        android:textColorHint="@color/black"
         android:inputType="date"
         android:padding="12dp"
         android:autofillHints="creditCardExpirationDate"
@@ -88,9 +96,12 @@
         android:id="@+id/etRecordatori"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:maxWidth="360dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
         android:background="@android:drawable/edit_text"
         android:hint="@string/etRecordatori"
+        android:textColorHint="@color/black"
         android:inputType="date"
         android:padding="12dp"
         android:textSize="16sp"
@@ -100,9 +111,12 @@
         android:id="@+id/etPrioritat"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:maxWidth="360dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
         android:background="@android:drawable/edit_text"
         android:hint="@string/etPrioritat"
+        android:textColorHint="@color/black"
         android:padding="12dp"
         android:textSize="16sp"
         android:inputType="text"
@@ -112,9 +126,12 @@
         android:id="@+id/etLlista"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
+        android:maxWidth="360dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
         android:background="@android:drawable/edit_text"
         android:hint="@string/etLlista"
+        android:textColorHint="@color/black"
         android:padding="12dp"
         android:textSize="16sp"
         android:inputType="text"
@@ -123,7 +140,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp">
+        android:layout_marginTop="8dp"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp">
 
         <Button
             android:id="@+id/btnCancelar"
