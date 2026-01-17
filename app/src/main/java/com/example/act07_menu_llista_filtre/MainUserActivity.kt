@@ -18,6 +18,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 
 class MainUserActivity : AppCompatActivity() {
     private lateinit var btnTestNav: Button
@@ -41,7 +42,8 @@ class MainUserActivity : AppCompatActivity() {
     private fun setupToolbar() {
         toolbar = findViewById(R.id.my_toolbar)
         setSupportActionBar(toolbar)
-        supportActionBar?.title = "Les Meves Tasques"
+        supportActionBar?.title = "TaskBuddy"
+        toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.white))
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
