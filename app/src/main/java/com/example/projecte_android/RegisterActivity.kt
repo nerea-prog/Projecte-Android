@@ -5,15 +5,25 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import androidx.core.widget.addTextChangedListener
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var btnTestNav: Button
     private lateinit var toolbar: Toolbar
+    private val viewModel: RegisterViewModel by viewModels()
+
+    private lateinit var etName: EditText
+    private lateinit var etEmail: EditText
+    private lateinit var etPassword: EditText
+    private lateinit var etPasswordConfirm: EditText
+    private lateinit var btnRegister: Button
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,7 +32,47 @@ class RegisterActivity : AppCompatActivity() {
         setupToolbar()
         initComponents()
         initListeners()
+        initObservers()
+        initInputs()
     }
+
+
+    private fun initComponents() {
+        btnTestNav = findViewById(R.id.btnTestNav)
+        etName = findViewById(R.id.etName)
+        etEmail = findViewById(R.id.etGmail)
+        etPassword = findViewById(R.id.etPassword)
+        etPasswordConfirm = findViewById(R.id.etPasswordConfirm)
+        btnRegister = findViewById(R.id.btnRegistre)
+    }
+    private fun initListeners() {
+        btnTestNav.setOnClickListener {
+            val intent = Intent(this, RegistroCorrectoActivity::class.java)
+            startActivity(intent)
+        }
+        btnRegister.setOnClickListener {
+            viewModel.register()
+        }
+    }
+    private fun initObservers() {
+        viewModel.registrationSuccess.observe(this) {success ->
+            if (success){
+                Toast.makeText(this, "Registre exitòs", Toast.LENGTH_SHORT).show()
+                finish()
+            }
+        }
+        viewModel.registrationError.observe(this) {error ->
+            error?.let { Toast.makeText(this, it, Toast.LENGTH_SHORT).show() }
+        }
+    }
+
+    private fun initInputs() {
+        etName.addTextChangedListener { viewModel.setName(it.toString()) }
+        etEmail.addTextChangedListener { viewModel.setEmail(it.toString()) }
+        etPassword.addTextChangedListener { viewModel.setPassword(it.toString()) }
+        etPasswordConfirm.addTextChangedListener { viewModel.setPasswordConfirm(it.toString()) }
+    }
+
     private fun setupToolbar() {
         toolbar = findViewById(R.id.my_toolbar)
         setSupportActionBar(toolbar)
@@ -62,15 +112,5 @@ class RegisterActivity : AppCompatActivity() {
             .setMessage("Aplicació que gestiona les tasques")
             .setPositiveButton("Tancar", null)
             .show()
-    }
-    private fun initListeners() {
-        btnTestNav.setOnClickListener {
-            val intent = Intent(this, RegistroCorrectoActivity::class.java)
-            startActivity(intent)
-        }
-    }
-
-    private fun initComponents() {
-        btnTestNav = findViewById(R.id.btnTestNav)
     }
 }
