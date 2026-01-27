@@ -2,8 +2,9 @@ package com.example.projecte_android
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 
-class LoginViewModel {
+class LoginViewModel : ViewModel() {
     private val _username = MutableLiveData<String>()
     val username: LiveData<String> = _username
 
@@ -26,12 +27,12 @@ class LoginViewModel {
 
     fun login(){
         val user = _username.value.orEmpty()
-        val contraseña = _password.value.orEmpty()
+        val password = _password.value.orEmpty()
 
         when{
             user.isEmpty() -> _loginError.value = "El usuari no pot estar buit"
-            contraseña.isEmpty() -> _loginError.value = "La contraseña no pot estar buida"
-            contraseña.length < 6 -> _loginError.value = "La contraseña ha de tenir almenys 6 caracters"
+            password.isEmpty() -> _loginError.value = "La contraseña no pot estar buida"
+            password.length < 6 -> _loginError.value = "La contraseña ha de tenir almenys 6 caracters"
             else -> {
                 _loginError.value = null
                 _loginSucces.value = true

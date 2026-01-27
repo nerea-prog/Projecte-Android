@@ -2,8 +2,9 @@ package com.example.projecte_android
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 
-class RegisterViewModel {
+class RegisterViewModel : ViewModel() {
     private val _name = MutableLiveData<String>()
     val name: LiveData<String> = _name
 

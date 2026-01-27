@@ -56,6 +56,8 @@ class LoginActivity : AppCompatActivity() {
         viewModel.loginSucces.observe(this) {success ->
             if (success){
                 Toast.makeText(this, "Login exitòs", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, MainUserActivity::class.java)
+                startActivity(intent)
             }
         }
         viewModel.loginError.observe(this){ error ->

@@ -58,7 +58,8 @@ class RegisterActivity : AppCompatActivity() {
         viewModel.registrationSuccess.observe(this) {success ->
             if (success){
                 Toast.makeText(this, "Registre exitòs", Toast.LENGTH_SHORT).show()
-                finish()
+                val intent = Intent(this, RegistroCorrectoActivity::class.java)
+                startActivity(intent)
             }
         }
         viewModel.registrationError.observe(this) {error ->
