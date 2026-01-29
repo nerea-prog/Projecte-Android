@@ -46,18 +46,30 @@ class RegisterViewModel : ViewModel() {
     val registrationSuccess: LiveData<Boolean> = _registrationSuccess
 
     /**
-     * Funcions utilitzades per actualitzar les dades introduïdes per l'usuari
-     * des de la UI.
+     * Actualitza el nom d'usuari introduït per l'usuari.
+     * @param value Text introduït per l'usuari
      */
     fun setName(value: String){
         _name.value = value
     }
+    /**
+     * Actualitza el correu del usuari introduït per l'usuari.
+     * @param value Text introduït per l'usuari
+     */
     fun setEmail(value: String){
         _email.value = value
     }
+    /**
+     * Actualitza la contrassenya del usuari introduït per l'usuari.
+     * @param value Text introduït per l'usuari
+     */
     fun setPassword(value: String){
         _password.value = value
     }
+    /**
+     * Actualitza la confirmació de la contrassenya del usuari introduït per l'usuari.
+     * @param value Text introduït per l'usuari
+     */
     fun setPasswordConfirm(value: String){
         _passwordConfirm.value = value
     }
@@ -105,5 +117,4 @@ class RegisterViewModel : ViewModel() {
             }
         }
     }
-
 }

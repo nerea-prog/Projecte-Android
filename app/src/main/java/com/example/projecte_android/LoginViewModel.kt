@@ -42,13 +42,16 @@ class LoginViewModel : ViewModel() {
 
     /**
      * Actualitza el nom d'usuari introduït per l'usuari.
+     * @param value es un text
      */
+
     fun setUsername(value: String){
         _username.value = value
     }
 
     /**
      * Actualitza la contrasenya introduïda per l'usuari.
+     * @param value es un text
      */
     fun setPassword(value: String){
         _password.value = value
