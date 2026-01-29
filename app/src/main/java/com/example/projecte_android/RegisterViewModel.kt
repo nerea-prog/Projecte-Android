@@ -109,6 +109,7 @@ class RegisterViewModel : ViewModel() {
         when{
             nom.isEmpty() -> _registrationError.value = "El nom no pot estar buit"
             email.isEmpty() || !isEmailValid(email) -> _registrationError.value = "Correu invàlid"
+            contrasenya.isEmpty() -> _registrationError.value = "La contrasenya no pot estar buida"
             contrasenya.length < 6 -> _registrationError.value = "La contrasenya ha de tenir almenys 6 caracters"
             contrasenya != confirmaContra -> _registrationError.value = "Les contrasenyes no coincideixen"
             else -> {
