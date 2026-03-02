@@ -1,7 +1,7 @@
 package com.example.projecte_android
 
 data class MyItem(
-    val id: Int = 0,
+    val id: Long = 0L,
     val title: String,
     val category: String = "General",
     val imagePath: String? = null,
