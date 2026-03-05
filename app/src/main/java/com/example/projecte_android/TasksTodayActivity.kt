@@ -13,8 +13,12 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class TasksTodayActivity : AppCompatActivity() {
 
@@ -22,6 +26,8 @@ class TasksTodayActivity : AppCompatActivity() {
     private lateinit var toolbar: Toolbar
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: MyAdapter
+
+    private var allTasks: List<MyItem> = emptyList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,8 +37,31 @@ class TasksTodayActivity : AppCompatActivity() {
         setupRecyclerView()
         initComponents()
         initListeners()
+        loadTasksFromApi()
     }
 
+    private fun loadTasksFromApi() {
+        lifecycleScope.launch {
+            try {
+                // Llamada a la API
+                val response = withContext(Dispatchers.IO) {
+                    RetrofitClient.getApi().getAllTasks()
+                }
+                if (response.isSuccessful) {
+                    val tasks = response.body() ?: emptyList()
+                    allTasks = tasks
+                    adapter.updateList(allTasks)
+                } else {
+                    Toast.makeText(this@TasksTodayActivity,
+                        "Error ${response.code()}", Toast.LENGTH_SHORT).show()
+                }
+            } catch (e: Exception) {
+                Toast.makeText(this@TasksTodayActivity,
+                    "Error de connexió", Toast.LENGTH_SHORT).show()
+                Log.e("API", "Error: ${e.message}")
+            }
+        }
+    }
     private fun setupToolbar() {
         toolbar = findViewById(R.id.my_toolbar)
         setSupportActionBar(toolbar)
@@ -40,15 +69,12 @@ class TasksTodayActivity : AppCompatActivity() {
         toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.white))
 
     }
-
     private fun setupRecyclerView() {
         recyclerView = findViewById(R.id.rvListToday)
         recyclerView.layoutManager = LinearLayoutManager(this)
-
-        adapter = MyAdapter(DataSource.items) { item, position ->
+        adapter = MyAdapter(allTasks) { item, position ->
             handleItemClick(item, position)
         }
-
         recyclerView.adapter = adapter
     }
 
@@ -117,11 +143,10 @@ class TasksTodayActivity : AppCompatActivity() {
         Log.d("Filter", "Categoria seleccionada: $category")
 
         val filteredList = if (category == "Totes") {
-            DataSource.items // Mostrar tots els items
+            allTasks
         } else {
-            DataSource.items.filter { it.category == category } // Filtrar per categoria
+            allTasks.filter { it.category == category } // Filtrar per categoria
         }
-
         adapter.updateList(filteredList)
     }
 
