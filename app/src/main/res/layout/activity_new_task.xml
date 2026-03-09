@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".EditActivity">
+    tools:context=".NewTaskActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/my_toolbar"
@@ -43,7 +43,7 @@
         android:layout_marginBottom="12dp"
         android:layout_marginStart="24dp"
         android:fontFamily="@font/baloo2_extrabold"
-        android:text="@string/tvEditarTasca"
+        android:text="@string/tvnewTask"
         android:textColor="@color/brown"
         android:textAllCaps="true"
         android:textSize="40sp" />
@@ -65,7 +65,7 @@
         android:autofillHints="name"/>
 
     <EditText
-        android:id="@+id/etCategory"
+        android:id="@+id/etCategoria"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:maxWidth="360dp"
@@ -79,7 +79,6 @@
         android:textSize="16sp"
         android:inputType="text"
         android:autofillHints="name"/>
-
 
 
     <androidx.constraintlayout.widget.ConstraintLayout

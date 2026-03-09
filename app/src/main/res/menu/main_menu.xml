@@ -23,4 +23,9 @@
         android:id="@+id/action_sobre"
         android:title="Sobre l'aplicació"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_delete_all"
+        android:title="Eliminar totes les tasques"
+        app:showAsAction="never" />
 </menu>

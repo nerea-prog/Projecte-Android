@@ -18,7 +18,7 @@ class RetrofitClient {
 
                 mTaskApi = Retrofit.Builder()
                     .addConverterFactory(GsonConverterFactory.create(gson))
-                    .baseUrl("http://193.122.148.1:8081/")
+                    .baseUrl("http://129.213.48.249:8081/")
                     .build()
                     .create(TaskApiService::class.java)
             }

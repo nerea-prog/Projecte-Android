@@ -43,7 +43,9 @@
     <string name="tvNovaTasca">Nova tasca</string>
     <string name="tvTasquesDeAvui">Tasques d\'avui</string>
     <string name="tvEditarTasca">Editar tasca:</string>
+    <string name="etTitle">Títol</string>
     <string name="etDescripcio">Descripció</string>
+    <string name="etCategory">Categoria</string>
     <string name="etDataLimit">Data limit</string>
     <string name="etRecordatori">Recordatori</string>
     <string name="etPrioritat">Prioritat</string>
