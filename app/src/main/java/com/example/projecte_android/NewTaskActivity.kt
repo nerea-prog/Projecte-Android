@@ -2,7 +2,6 @@ package com.example.projecte_android
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
@@ -108,8 +107,6 @@ class NewTaskActivity : AppCompatActivity() {
             }  catch (e: Exception) {
             Toast.makeText(this@NewTaskActivity,
                 "Error de connexió", Toast.LENGTH_SHORT).show()
-                Log.e("NewTask", "Error: ${e.message}")
-                Log.e("NewTask", "Causa: ${e.cause}")
             }
         }
     }

@@ -2,7 +2,6 @@ package com.example.projecte_android
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
@@ -53,7 +52,6 @@ class EditActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     val gson = com.google.gson.Gson()
                     val json = response.body()?.string()
-                    Log.d("EditActivity", "Resposta API: $json")
                     currentTask = gson.fromJson(json, MyItem::class.java)
                     currentTask?.let {
                         etTitle.setText(it.title)
@@ -61,8 +59,6 @@ class EditActivity : AppCompatActivity() {
                     }
                 } else {
                     val errorBody = response.errorBody()?.string()
-                    Log.e("EditActivity", "Codi: ${response.code()}")
-                    Log.e("EditActivity", "Error body: $errorBody")
                     Toast.makeText(this@EditActivity,
                         "Error carregant la tasca", Toast.LENGTH_SHORT).show()
                     finish()
@@ -70,8 +66,6 @@ class EditActivity : AppCompatActivity() {
             } catch (e: Exception) {
                 Toast.makeText(this@EditActivity,
                     "Error de connexió", Toast.LENGTH_SHORT).show()
-                Log.e("EditActivity", "Error: ${e.message}")
-                Log.e("EditActivity", "Causa: ${e.cause}")
                 finish()
             }
         }
@@ -108,7 +102,6 @@ class EditActivity : AppCompatActivity() {
             } catch (e: Exception) {
                 Toast.makeText(this@EditActivity,
                     "Error de connexió", Toast.LENGTH_SHORT).show()
-                Log.e("EditActivity", "Error: ${e.message}")
             }
         }
     }
