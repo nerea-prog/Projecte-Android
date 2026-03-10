@@ -4,6 +4,12 @@ import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.*
 
+/**
+ * Interfície que defineix els endpoints de l'API REST de TaskBuddy.
+ *
+ * Retrofit genera automàticament la implementació d'aquesta interfície.
+ * Totes les funcions són suspend, per tant s'han d'executar dins d'una corrutina.
+ */
 interface TaskApiService {
 
     // Obtenir totes les tasques
