@@ -21,7 +21,7 @@ interface TaskApiService {
 
     // Actualitzar una tasca
     @PUT("taskbuddy/api/task/{id}")
-    suspend fun updateTask(@Path("id") id: Long, @Body task: MyItem): Response<MyItem>
+    suspend fun updateTask(@Path("id") id: Long, @Body task: MyItem): Response<ResponseBody>
 
     // Eliminar una tasca per ID
     @DELETE("taskbuddy/api/task/{id}")

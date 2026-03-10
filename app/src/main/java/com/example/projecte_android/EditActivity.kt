@@ -51,14 +51,18 @@ class EditActivity : AppCompatActivity() {
                     RetrofitClient.getApi().getTaskById(taskId)
                 }
                 if (response.isSuccessful) {
-                    val json = response.body()?.string()
                     val gson = com.google.gson.Gson()
+                    val json = response.body()?.string()
+                    Log.d("EditActivity", "Resposta API: $json")
                     currentTask = gson.fromJson(json, MyItem::class.java)
                     currentTask?.let {
                         etTitle.setText(it.title)
                         etCategory.setText(it.category)
                     }
                 } else {
+                    val errorBody = response.errorBody()?.string()
+                    Log.e("EditActivity", "Codi: ${response.code()}")
+                    Log.e("EditActivity", "Error body: $errorBody")
                     Toast.makeText(this@EditActivity,
                         "Error carregant la tasca", Toast.LENGTH_SHORT).show()
                     finish()
@@ -67,6 +71,7 @@ class EditActivity : AppCompatActivity() {
                 Toast.makeText(this@EditActivity,
                     "Error de connexió", Toast.LENGTH_SHORT).show()
                 Log.e("EditActivity", "Error: ${e.message}")
+                Log.e("EditActivity", "Causa: ${e.cause}")
                 finish()
             }
         }
@@ -148,14 +153,26 @@ class EditActivity : AppCompatActivity() {
             .setPositiveButton("Tancar", null)
             .show()
     }
+    private fun initComponents() {
+        btnTestNav = findViewById(R.id.btnTestNav)
+        btnDesar = findViewById(R.id.btnDesar)
+        btnCancelar = findViewById(R.id.btnCancelar)
+        etTitle = findViewById(R.id.etTitle)
+        etCategory = findViewById(R.id.etCategory)
+    }
+
     private fun initListeners() {
         btnTestNav.setOnClickListener {
             val intent = Intent(this, ConfigurationActivity::class.java)
             startActivity(intent)
         }
-    }
 
-    private fun initComponents() {
-        btnTestNav = findViewById(R.id.btnTestNav)
+        btnDesar.setOnClickListener {
+            updateTask()
+        }
+
+        btnCancelar.setOnClickListener {
+            finish()
+        }
     }
 }
