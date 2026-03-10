@@ -43,6 +43,10 @@ class EditActivity : AppCompatActivity() {
         loadTask()
     }
 
+    /**
+     * Carrega una tasca per la seva id
+     * Omple els camps amb la infomració rebuda
+     */
     private fun loadTask() {
         lifecycleScope.launch {
             try {
@@ -71,6 +75,10 @@ class EditActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Actualitza una tasca existent per id
+     * Fa les validaciones basiques per tal de verifica que no sigui buit
+     */
     private fun updateTask() {
         val title = etTitle.text.toString().trim()
         val category = etCategory.text.toString().trim()

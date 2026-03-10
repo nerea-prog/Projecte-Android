@@ -72,11 +72,16 @@ class NewTaskActivity : AppCompatActivity() {
             .show()
     }
 
+
+    /**
+     * Crea una tasca a la API
+     * Valida que els camps no estiguin buits
+     * Si tot es correcte, tanca l'activity i torna enrere
+     */
     private fun createTask() {
         val title = etTitle.text.toString().trim()
         val category = etCategoria.text.toString().trim()
 
-        // Validación básica
         if (title.isEmpty()) {
             etTitle.error = "El títol no pot estar buit"
             return

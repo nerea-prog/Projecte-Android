@@ -43,6 +43,10 @@ class TasksTodayActivity : AppCompatActivity() {
         loadTasksFromApi()
     }
 
+    /**
+     * Obté totes les tasques de la API
+     * En cas de llista buida, torna un error 404
+     */
     private fun loadTasksFromApi() {
         lifecycleScope.launch {
             try {
@@ -192,6 +196,13 @@ class TasksTodayActivity : AppCompatActivity() {
             .show()
     }
 
+    /**
+     * Elimina una tasca en concret
+     * Aquesta tasca s'elimina a través de la id
+     *
+     * @param item
+     *
+     */
     private fun deleteTask(item: MyItem) {
         AlertDialog.Builder(this)
             .setTitle("Eliminar tasca")
@@ -219,6 +230,10 @@ class TasksTodayActivity : AppCompatActivity() {
             .show()
     }
 
+    /**
+     * Elimina totes les tasques
+     *
+     */
     private fun deleteAllTasks() {
         AlertDialog.Builder(this)
             .setTitle("Eliminar totes les tasques")
@@ -247,81 +262,10 @@ class TasksTodayActivity : AppCompatActivity() {
             .show()
     }
 
-    private fun showCreateDialog() {
-        val input = android.widget.EditText(this)
-        input.hint = "Títol de la tasca"
-
-        AlertDialog.Builder(this)
-            .setTitle("Nova tasca")
-            .setView(input)
-            .setPositiveButton("Crear") { _, _ ->
-                val title = input.text.toString().trim()
-                if (title.isEmpty()) {
-                    Toast.makeText(this, "El títol no pot estar buit", Toast.LENGTH_SHORT).show()
-                    return@setPositiveButton
-                }
-                val newTask = MyItem(title = title)
-                lifecycleScope.launch {
-                    try {
-                        val response = withContext(Dispatchers.IO) {
-                            RetrofitClient.getApi().createTasks(listOf(newTask))
-                        }
-                        if (response.isSuccessful) {
-                            Toast.makeText(this@TasksTodayActivity,
-                                "Tasca creada!", Toast.LENGTH_SHORT).show()
-                            loadTasksFromApi()
-                        } else {
-                            Toast.makeText(this@TasksTodayActivity,
-                                "Error creant: ${response.code()}", Toast.LENGTH_SHORT).show()
-                        }
-                    } catch (e: Exception) {
-                        Toast.makeText(this@TasksTodayActivity,
-                            "Error de connexió", Toast.LENGTH_SHORT).show()
-                    }
-                }
-            }
-            .setNegativeButton("Cancel·lar", null)
-            .show()
-    }
-
-    private fun showEditDialog(item: MyItem) {
-        val input = android.widget.EditText(this)
-        input.setText(item.title)
-
-        AlertDialog.Builder(this)
-            .setTitle("Editar tasca")
-            .setView(input)
-            .setPositiveButton("Guardar") { _, _ ->
-                val newTitle = input.text.toString().trim()
-                if (newTitle.isEmpty()) {
-                    Toast.makeText(this, "El títol no pot estar buit", Toast.LENGTH_SHORT).show()
-                    return@setPositiveButton
-                }
-                val updatedTask = item.copy(title = newTitle)
-                lifecycleScope.launch {
-                    try {
-                        val response = withContext(Dispatchers.IO) {
-                            RetrofitClient.getApi().updateTask(item.id, updatedTask)
-                        }
-                        if (response.isSuccessful) {
-                            Toast.makeText(this@TasksTodayActivity,
-                                "Tasca actualitzada!", Toast.LENGTH_SHORT).show()
-                            loadTasksFromApi()
-                        } else {
-                            Toast.makeText(this@TasksTodayActivity,
-                                "Error actualitzant: ${response.code()}", Toast.LENGTH_SHORT).show()
-                        }
-                    } catch (e: Exception) {
-                        Toast.makeText(this@TasksTodayActivity,
-                            "Error de connexió", Toast.LENGTH_SHORT).show()
-                    }
-                }
-            }
-            .setNegativeButton("Cancel·lar", null)
-            .show()
-    }
-
-    // Recarga la lista al volver
+    /**
+     * Recargar una llista al tornar a l'activity
+     * Serveix per veure les dades actualitzades
+     */
     override fun onResume() {
         super.onResume()
         loadTasksFromApi()
