@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -16,6 +17,7 @@ class ConfigurationActivity : AppCompatActivity() {
     private lateinit var btnTestNav: Button
 
     private lateinit var toolbar: Toolbar
+    private lateinit var tvGrafics: TextView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -71,9 +73,14 @@ class ConfigurationActivity : AppCompatActivity() {
             val intent = Intent(this, TutorialActivity::class.java)
             startActivity(intent)
         }
+        tvGrafics.setOnClickListener {
+            val intent = Intent(this, GraficsActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun initComponents() {
         btnTestNav = findViewById(R.id.btnTestNav)
+        tvGrafics = findViewById(R.id.tvGrafic)
     }
 }

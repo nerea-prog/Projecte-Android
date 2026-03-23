@@ -152,6 +152,20 @@
             app:layout_constraintTop_toTopOf="@+id/tvTema"
             app:layout_constraintBottom_toBottomOf="@+id/tvTema" />
 
+        <TextView
+            android:id="@+id/tvGrafic"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="110dp"
+            android:textSize="20sp"
+            android:text="@string/tvGrafics"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvTema"
+            android:layout_marginTop="16dp"
+            app:layout_constraintHorizontal_bias="0" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

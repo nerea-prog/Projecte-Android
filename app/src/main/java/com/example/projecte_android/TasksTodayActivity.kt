@@ -273,7 +273,7 @@ class TasksTodayActivity : AppCompatActivity() {
 
     private fun initListeners() {
         btnTestNav.setOnClickListener {
-            val intent = Intent(this, EditActivity::class.java)
+            val intent = Intent(this, ConfigurationActivity::class.java)
             startActivity(intent)
         }
         tvNovaTasca.setOnClickListener {
