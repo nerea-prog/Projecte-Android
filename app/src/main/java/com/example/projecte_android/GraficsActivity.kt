@@ -15,18 +15,103 @@ import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.firestore
 
+data class Estadistiques(
+    var minuts: Float = 0f,
+    var accions: Map<String, Float> = mapOf("afegir" to 0f, "eliminar" to 0f, "navegar" to 0f),
+    var tasques: Map<String, Float> = mapOf("fet" to 0f, "pendent" to 0f, "eliminar" to 0f)
+)
 class GraficsActivity : AppCompatActivity() {
     private lateinit var toolbar: Toolbar
+    private val db = Firebase.firestore
+    private val documentId = "usuari_test"
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_grafics)
+
         setupToolbar()
         setupStats()
         setupBarChart()
         setupPieChart()
         setupBtnReset()
+        escoltarCanvis(documentId)
+    }
+
+    fun guardarItemFirestore(titulo: String, categoria: String = "General") {
+        // Creamos una referencia a un nuevo documento (ID automático)
+        val nuevoDoc = db.collection("tasks").document()
+
+        val item = MyItem(
+            id = nuevoDoc.id.toLong(), // usamos el ID generado
+            title = titulo,
+            category = categoria
+        )
+
+        nuevoDoc.set(item)
+            .addOnSuccessListener {
+                println("Tasca guardada a Firestore: $titulo")
+            }
+            .addOnFailureListener { e ->
+                println("Error guardant la tasca: $e")
+            }
+    }
+
+    fun obtenerItemsFirestore() {
+        db.collection("tasks")
+            .get()
+            .addOnSuccessListener { result ->
+                val llistaItems = result.toObjects(MyItem::class.java)
+                actualitzarGrafics(llistaItems)
+            }
+            .addOnFailureListener { e ->
+                println("Error en obtenir les tasques: $e")
+            }
+    }
+
+    private fun actualitzarGrafics(items: List<MyItem>) {
+        // Contadors de accions
+        val afegir = items.size.toFloat()
+        val eliminar = contadorEliminadas.toFloat()
+        val navegar = items.size.toFloat()
+
+        // BarChart
+        val barEntries = listOf(
+            BarEntry(0f, afegir),
+            BarEntry(1f, eliminar),
+            BarEntry(2f, navegar)
+        )
+        val barDataSet = BarDataSet(barEntries, "Accions")
+        barDataSet.color = Color.parseColor("#D2691E")
+        barDataSet.valueTextSize = 12f
+        barChart.data = BarData(barDataSet)
+        barChart.description.text = "Accions realitzades"
+        barChart.invalidate()
+
+        // PieChart
+        val fet = items.count { it.completed }.toFloat()
+        val pendent = items.count { !it.completed }.toFloat()
+        val eliminades = contadorEliminadas.toFloat()
+
+        val pieEntries = listOf(
+            PieEntry(fet, "Fetes"),
+            PieEntry(pendent, "Pendents"),
+            PieEntry(eliminades, "Eliminades")
+        )
+        val pieDataSet = PieDataSet(pieEntries, "Tasques")
+        pieDataSet.colors = listOf(
+            Color.parseColor("#D2691E"),
+            Color.parseColor("#FF8C00"),
+            Color.parseColor("#A0522D")
+        )
+        pieDataSet.valueTextSize = 12f
+        pieChart.data = PieData(pieDataSet)
+        pieChart.description.text = "Tasques per categoria"
+        pieChart.invalidate()
     }
 
     private fun setupToolbar() {
