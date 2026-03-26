@@ -30,7 +30,7 @@ class GraficsActivity : AppCompatActivity() {
     }
 
     private fun setupToolbar() {
-        toolbar = findViewById(R.id.my_toolbar)
+        toolbar = findViewById(R.id.graficsToolbar)
         setSupportActionBar(toolbar)
         supportActionBar?.title = "TaskBuddy"
         toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.white))
