@@ -1,4 +1,4 @@
-package com.example.projecte_android
+package com.example.projecte_android.ui
 
 import android.graphics.Color
 import android.os.Bundle
@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import com.example.projecte_android.R
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.data.BarData
@@ -24,9 +25,7 @@ class GraficsActivity : AppCompatActivity() {
     private lateinit var toolbar: Toolbar
     private lateinit var barChart: BarChart
     private lateinit var pieChart: PieChart
-
-    // Instància de Firestore
-    private val db = Firebase.firestore
+    private val db = Firebase.firestore // Instància de Firestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,22 +38,23 @@ class GraficsActivity : AppCompatActivity() {
         barChart = findViewById(R.id.barChart)
         pieChart = findViewById(R.id.pieChart)
 
-        // Escoltem canvis en temps real
         escoltarCanvis()
     }
 
-    // FIRESTORE: Escoltar canvis en temps real
+    /**
+     * Escolta el document en temps real els canvis del document stats/taskStats
+     * Cada vegada que s'afegeix o s'elimina una tasca, firestore notifica a la app
+     */
+
     private fun escoltarCanvis() {
         val statsRef = db.collection("stats").document("taskStats")
 
         statsRef.addSnapshotListener { snapshot, e ->
-            // Si hi ha error, sortim
             if (e != null) {
                 Log.e("Firestore", "Error escoltant canvis", e)
                 return@addSnapshotListener
             }
 
-            // Si el document existeix, llegim les dades i actualitzem els gràfics
             if (snapshot != null && snapshot.exists()) {
                 val afegir  = (snapshot.getLong("afegir")   ?: 0L).toFloat()
                 val eliminar = (snapshot.getLong("eliminar") ?: 0L).toFloat()
@@ -65,6 +65,12 @@ class GraficsActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Dibuixa o actualitza el gràfic de barres amb les dades de tasques afegides i eliminades
+     *
+     * @param afegir entrada en posició 0
+     * @param eliminar entrada en posició 2
+     */
     private fun actualitzarBarChart(afegir: Float, eliminar: Float) {
         val entries = listOf(
             BarEntry(0f, afegir),
@@ -73,18 +79,23 @@ class GraficsActivity : AppCompatActivity() {
 
         val dataSet = BarDataSet(entries, "Accions")
         dataSet.colors = listOf(
-            Color.parseColor("#D2691E"),  // Afegir → marró
-            Color.parseColor("#FF8C00")   // Eliminar → taronja
+            Color.parseColor("#D2691E"),
+            Color.parseColor("#FF8C00")
         )
         dataSet.valueTextSize = 12f
 
         barChart.data = BarData(dataSet)
         barChart.description.text = "Tasques afegides / eliminades"
-        barChart.invalidate() // Refresca el gràfic
+        barChart.invalidate()
     }
 
+    /**
+     * Dibuixa o actualitza el gràfic circular amb la proporció entre tasques afegides i eliminades
+     *
+     * @param afegir porció 1
+     * @param eliminar porció 2
+     */
     private fun actualitzarPieChart(afegir: Float, eliminar: Float) {
-        // Evitem mostrar el gràfic si tot és 0 (quedaria buit i donaria error)
         if (afegir == 0f && eliminar == 0f) {
             pieChart.clear()
             pieChart.setNoDataText("Encara no hi ha dades")
@@ -105,13 +116,15 @@ class GraficsActivity : AppCompatActivity() {
 
         pieChart.data = PieData(dataSet)
         pieChart.description.text = "Proporció afegir / eliminar"
-        pieChart.invalidate() // Refresca el gràfic
+        pieChart.invalidate()
     }
 
+    /**
+     * Configura el botó de resetejar per posar els comptadors a 0
+     */
     private fun setupBtnReset() {
         val btnReset = findViewById<Button>(R.id.btnResetStats)
         btnReset.setOnClickListener {
-            // Reseteja els comptadors a Firestore
             val statsRef = db.collection("stats").document("taskStats")
             val dadesBuides = hashMapOf("afegir" to 0L, "eliminar" to 0L)
             statsRef.set(dadesBuides)
@@ -124,6 +137,9 @@ class GraficsActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Configura la barra superior de l'aplicació
+     */
     private fun setupToolbar() {
         toolbar = findViewById(R.id.graficsToolbar)
         setSupportActionBar(toolbar)
@@ -131,6 +147,9 @@ class GraficsActivity : AppCompatActivity() {
         toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.white))
     }
 
+    /**
+     * Mostra les estadistiques d'us i emprentes de carboni en dos TextViews
+     */
     private fun setupStats() {
         val txtMinuts = findViewById<TextView>(R.id.txtMinutsUs)
         val txtCO2    = findViewById<TextView>(R.id.txtCO2)

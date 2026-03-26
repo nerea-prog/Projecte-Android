@@ -1,4 +1,4 @@
-package com.example.projecte_android
+package com.example.projecte_android.ui
 
 import android.content.Intent
 import android.os.Bundle
@@ -17,6 +17,10 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.projecte_android.R
+import com.example.projecte_android.adapter.MyAdapter
+import com.example.projecte_android.data.MyItem
+import com.example.projecte_android.network.RetrofitClient
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.Dispatchers
@@ -33,8 +37,7 @@ class TasksTodayActivity : AppCompatActivity() {
 
     private var allTasks: List<MyItem> = emptyList()
 
-    // Instància de Firestore
-    private val db = Firebase.firestore
+    private val db = Firebase.firestore // Instància de Firestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,24 +50,26 @@ class TasksTodayActivity : AppCompatActivity() {
         loadTasksFromApi()
     }
 
+    /**
+     * Actualitza un comptador d'estadistiques en firestore
+     *
+     * @param camp Camp a incrementar
+     * @return res
+     */
     private fun incrementarEstadistica(camp: String) {
-        // Obtenim el document d'estadístiques (o el creem si no existeix)
         val statsRef = db.collection("stats").document("taskStats")
 
         statsRef.get()
             .addOnSuccessListener { document ->
-                // Llegim els valors actuals (o 0 si no existeix)
                 val afegir = document.getLong("afegir") ?: 0L
                 val eliminar = document.getLong("eliminar") ?: 0L
 
-                // Creem el nou mapa amb el camp incrementat
                 val nousDades = when (camp) {
                     "afegir"   -> hashMapOf("afegir" to afegir + 1, "eliminar" to eliminar)
                     "eliminar" -> hashMapOf("afegir" to afegir, "eliminar" to eliminar + 1)
                     else       -> return@addOnSuccessListener
                 }
 
-                // Guardem a Firestore (seguint el .set() del pas a pas)
                 statsRef.set(nousDades)
                     .addOnSuccessListener {
                         Log.d("Firestore", "Estadística actualitzada: $camp")
@@ -117,8 +122,7 @@ class TasksTodayActivity : AppCompatActivity() {
                             Toast.makeText(this@TasksTodayActivity,
                                 "Tasca eliminada", Toast.LENGTH_SHORT).show()
                             loadTasksFromApi()
-                            // ✅ Incrementem el comptador d'eliminar a Firestore
-                            incrementarEstadistica("eliminar")
+                            incrementarEstadistica("eliminar") // Incrementa el comptador d'eliminar a Firestore
                         } else {
                             Toast.makeText(this@TasksTodayActivity,
                                 "Error eliminant la tasca", Toast.LENGTH_SHORT).show()
@@ -147,8 +151,7 @@ class TasksTodayActivity : AppCompatActivity() {
                             Toast.makeText(this@TasksTodayActivity,
                                 "Totes les tasques eliminades", Toast.LENGTH_SHORT).show()
                             loadTasksFromApi()
-                            // ✅ Incrementem el comptador d'eliminar a Firestore
-                            incrementarEstadistica("eliminar")
+                            incrementarEstadistica("eliminar") // Incrementa el comptador d'eliminar a Firestore
                         } else {
                             Toast.makeText(this@TasksTodayActivity,
                                 "Error: ${response.code()}", Toast.LENGTH_SHORT).show()
@@ -270,8 +273,7 @@ class TasksTodayActivity : AppCompatActivity() {
         }
         tvNovaTasca.setOnClickListener {
             startActivity(Intent(this, NewTaskActivity::class.java))
-            // ✅ Incrementem el comptador d'afegir a Firestore
-            incrementarEstadistica("afegir")
+            incrementarEstadistica("afegir") // Incrementa el comptador d'afegir a Firestore
         }
     }
 

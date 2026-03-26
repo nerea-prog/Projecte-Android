@@ -1,4 +1,4 @@
-package com.example.projecte_android
+package com.example.projecte_android.ui
 
 import android.content.Intent
 import android.os.Bundle
@@ -13,6 +13,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
+import com.example.projecte_android.R
+import com.example.projecte_android.viewmodel.RegisterViewModel
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var btnTestNav: Button

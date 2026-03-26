@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/floral_white"
     android:padding="24dp"
-    tools:context=".LoginActivity">
+    tools:context=".ui.LoginActivity">
 
 <!--    <androidx.appcompat.widget.Toolbar-->
 <!--        android:id="@+id/my_toolbar"-->

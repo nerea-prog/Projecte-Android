@@ -1,4 +1,4 @@
-package com.example.projecte_android
+package com.example.projecte_android.ui
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,7 +9,8 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.widget.addTextChangedListener
-import androidx.lifecycle.ViewModel
+import com.example.projecte_android.R
+import com.example.projecte_android.viewmodel.LoginViewModel
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var btnTestNav: Button

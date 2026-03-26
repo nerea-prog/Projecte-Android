@@ -1,8 +1,10 @@
-package com.example.projecte_android
+package com.example.projecte_android.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.projecte_android.R
+import com.example.projecte_android.data.MyItem
 
 class MyAdapter(
     private var items: List<MyItem>,
