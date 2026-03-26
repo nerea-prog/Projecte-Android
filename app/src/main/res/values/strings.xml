@@ -62,5 +62,11 @@
     <string name="test">TEST</string>
     <string name="titulo">Título</string>
     <string name="tvGrafics">Anar als gràfics</string>
+    <string name="resum_d_s">resum d\'ús</string>
+    <string name="minuts_d_s">Minuts d\'ús</string>
+    <string name="co_estimat">CO₂ estimat</string>
+    <string name="accions_realitzades">accions realitzades</string>
+    <string name="tasques_per_categoria">tasques per categoria</string>
+    <string name="reiniciar_estad_stiques">reiniciar estadístiques</string>
 
 </resources>
