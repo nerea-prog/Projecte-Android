@@ -15,34 +15,34 @@
         android:theme="@style/Theme.ACT07_Menu_Llista_filtre"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".GraficsActivity"
+            android:name=".ui.GraficsActivity"
             android:exported="false" />
         <activity
-            android:name=".NewTaskActivity"
+            android:name=".ui.NewTaskActivity"
             android:exported="false" />
         <activity
-            android:name=".TutorialActivity"
+            android:name=".ui.TutorialActivity"
             android:exported="false" />
         <activity
-            android:name=".MainUserActivity"
+            android:name=".ui.MainUserActivity"
             android:exported="false" />
         <activity
-            android:name=".ConfigurationActivity"
+            android:name=".ui.ConfigurationActivity"
             android:exported="false" />
         <activity
-            android:name=".EditActivity"
+            android:name=".ui.EditActivity"
             android:exported="false" />
         <activity
-            android:name=".TasksTodayActivity"
+            android:name=".ui.TasksTodayActivity"
             android:exported="false" />
         <activity
-            android:name=".RegistroCorrectoActivity"
+            android:name=".ui.RegistroCorrectoActivity"
             android:exported="false" />
         <activity
-            android:name=".RegisterActivity"
+            android:name=".ui.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".ui.LoginActivity"
             android:exported="true"
             android:theme="@style/Theme.App.SplashScreen">
             <intent-filter>

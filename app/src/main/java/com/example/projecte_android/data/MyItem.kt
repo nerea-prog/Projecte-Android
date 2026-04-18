@@ -1,4 +1,4 @@
-package com.example.projecte_android
+package com.example.projecte_android.data
 
 data class MyItem(
     val id: Long = 0L,

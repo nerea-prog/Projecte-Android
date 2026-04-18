@@ -1,4 +1,4 @@
-package com.example.projecte_android
+package com.example.projecte_android.network
 
 import com.google.gson.GsonBuilder
 import retrofit2.Retrofit

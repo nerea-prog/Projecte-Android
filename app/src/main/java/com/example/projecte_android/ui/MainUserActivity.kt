@@ -1,4 +1,4 @@
-package com.example.projecte_android
+package com.example.projecte_android.ui
 
 import android.content.Intent
 import android.os.Bundle
@@ -15,6 +15,9 @@ import android.view.View
 import android.widget.PopupMenu
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import com.example.projecte_android.R
+import com.example.projecte_android.adapter.MyAdapter
+import com.example.projecte_android.data.DataSource
 
 class MainUserActivity : AppCompatActivity() {
     private lateinit var btnTestNav: Button
@@ -119,7 +122,7 @@ class MainUserActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.rvLists)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        adapter = MyAdapter(DataSource.items){ item, position ->
+        adapter = MyAdapter(DataSource.items) { item, position ->
             Toast.makeText(this, "Has seleccionat: ${item.title}", Toast.LENGTH_SHORT).show()
         }
 

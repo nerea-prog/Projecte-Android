@@ -1,10 +1,14 @@
-package com.example.projecte_android
+package com.example.projecte_android.adapter
 
 import android.view.View
 import android.widget.CheckBox
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
+import com.example.projecte_android.R
+import com.example.projecte_android.data.MyItem
+import com.example.projecte_android.network.RetrofitClient
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -24,7 +28,7 @@ class MyViewHolder(
 
         cbCompleted.setOnCheckedChangeListener { _, isChecked ->
             val updatedTask = item.copy(completed = isChecked)
-            (itemView.context as androidx.appcompat.app.AppCompatActivity)
+            (itemView.context as AppCompatActivity)
                 .lifecycleScope.launch {
                     try {
                         withContext(Dispatchers.IO) {

@@ -1,4 +1,4 @@
-package com.example.projecte_android
+package com.example.projecte_android.ui
 
 import android.content.Intent
 import android.os.Bundle
@@ -17,6 +17,12 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.projecte_android.R
+import com.example.projecte_android.adapter.MyAdapter
+import com.example.projecte_android.data.MyItem
+import com.example.projecte_android.network.RetrofitClient
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -27,10 +33,11 @@ class TasksTodayActivity : AppCompatActivity() {
     private lateinit var toolbar: Toolbar
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: MyAdapter
-
     private lateinit var tvNovaTasca: TextView
 
     private var allTasks: List<MyItem> = emptyList()
+
+    private val db = Firebase.firestore // Instància de Firestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,9 +51,38 @@ class TasksTodayActivity : AppCompatActivity() {
     }
 
     /**
-     * Obté totes les tasques de la API
-     * En cas de llista buida, torna un error 404
+     * Actualitza un comptador d'estadistiques en firestore
+     *
+     * @param camp Camp a incrementar
+     * @return res
      */
+    private fun incrementarEstadistica(camp: String) {
+        val statsRef = db.collection("stats").document("taskStats")
+
+        statsRef.get()
+            .addOnSuccessListener { document ->
+                val afegir = document.getLong("afegir") ?: 0L
+                val eliminar = document.getLong("eliminar") ?: 0L
+
+                val nousDades = when (camp) {
+                    "afegir"   -> hashMapOf("afegir" to afegir + 1, "eliminar" to eliminar)
+                    "eliminar" -> hashMapOf("afegir" to afegir, "eliminar" to eliminar + 1)
+                    else       -> return@addOnSuccessListener
+                }
+
+                statsRef.set(nousDades)
+                    .addOnSuccessListener {
+                        Log.d("Firestore", "Estadística actualitzada: $camp")
+                    }
+                    .addOnFailureListener { e ->
+                        Log.e("Firestore", "Error actualitzant estadística", e)
+                    }
+            }
+            .addOnFailureListener { e ->
+                Log.e("Firestore", "Error llegint estadística", e)
+            }
+    }
+
     private fun loadTasksFromApi() {
         lifecycleScope.launch {
             try {
@@ -58,7 +94,6 @@ class TasksTodayActivity : AppCompatActivity() {
                     allTasks = tasks
                     adapter.updateList(allTasks)
                 } else if (response.code() == 404) {
-                    // No hay tareas, mostrar lista vacía sin error
                     allTasks = emptyList()
                     adapter.updateList(allTasks)
                 } else {
@@ -72,13 +107,72 @@ class TasksTodayActivity : AppCompatActivity() {
             }
         }
     }
+
+    private fun deleteTask(item: MyItem) {
+        AlertDialog.Builder(this)
+            .setTitle("Eliminar tasca")
+            .setMessage("Segur que vols eliminar?")
+            .setPositiveButton("Eliminar") { _, _ ->
+                lifecycleScope.launch {
+                    try {
+                        val response = withContext(Dispatchers.IO) {
+                            RetrofitClient.getApi().deleteTask(item.id)
+                        }
+                        if (response.isSuccessful) {
+                            Toast.makeText(this@TasksTodayActivity,
+                                "Tasca eliminada", Toast.LENGTH_SHORT).show()
+                            loadTasksFromApi()
+                            incrementarEstadistica("eliminar") // Incrementa el comptador d'eliminar a Firestore
+                        } else {
+                            Toast.makeText(this@TasksTodayActivity,
+                                "Error eliminant la tasca", Toast.LENGTH_SHORT).show()
+                        }
+                    } catch (e: Exception) {
+                        Toast.makeText(this@TasksTodayActivity,
+                            "Error de connexió", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+            .setNegativeButton("Cancel·lar", null)
+            .show()
+    }
+
+    private fun deleteAllTasks() {
+        AlertDialog.Builder(this)
+            .setTitle("Eliminar totes les tasques")
+            .setMessage("Segur que vols eliminar-les totes?")
+            .setPositiveButton("Eliminar tot") { _, _ ->
+                lifecycleScope.launch {
+                    try {
+                        val response = withContext(Dispatchers.IO) {
+                            RetrofitClient.getApi().deleteAllTasks()
+                        }
+                        if (response.isSuccessful) {
+                            Toast.makeText(this@TasksTodayActivity,
+                                "Totes les tasques eliminades", Toast.LENGTH_SHORT).show()
+                            loadTasksFromApi()
+                            incrementarEstadistica("eliminar") // Incrementa el comptador d'eliminar a Firestore
+                        } else {
+                            Toast.makeText(this@TasksTodayActivity,
+                                "Error: ${response.code()}", Toast.LENGTH_SHORT).show()
+                        }
+                    } catch (e: Exception) {
+                        Toast.makeText(this@TasksTodayActivity,
+                            "Error de connexió", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+            .setNegativeButton("Cancel·lar", null)
+            .show()
+    }
+
     private fun setupToolbar() {
         toolbar = findViewById(R.id.my_toolbar)
         setSupportActionBar(toolbar)
         supportActionBar?.title = "TaskBuddy"
         toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.white))
-
     }
+
     private fun setupRecyclerView() {
         recyclerView = findViewById(R.id.rvListToday)
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -88,30 +182,23 @@ class TasksTodayActivity : AppCompatActivity() {
         recyclerView.adapter = adapter
     }
 
-    // Inflar el menú
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
         return true
     }
 
-    // Gestionar clics del menú
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_inici -> {
-                Toast.makeText(this, "Anant a Inici", Toast.LENGTH_SHORT).show()
-                val intent = Intent(this, MainUserActivity::class.java)
-                startActivity(intent)
+                startActivity(Intent(this, MainUserActivity::class.java))
                 true
             }
             R.id.action_category_button -> {
-                // Mostrar el PopupMenu
                 showCategoryPopupMenu(toolbar)
                 true
             }
             R.id.action_configuracio -> {
-                Toast.makeText(this, "Obrint Configuració...", Toast.LENGTH_SHORT).show()
-                val intent = Intent(this, ConfigurationActivity::class.java)
-                startActivity(intent)
+                startActivity(Intent(this, ConfigurationActivity::class.java))
                 true
             }
             R.id.action_sobre -> {
@@ -128,39 +215,21 @@ class TasksTodayActivity : AppCompatActivity() {
 
     private fun showCategoryPopupMenu(view: View) {
         val popup = PopupMenu(this, view)
-
         popup.menuInflater.inflate(R.menu.popup_categories, popup.menu)
-
         popup.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
-                R.id.cat_totes -> {
-                    applyCategoryFilter("Totes")
-                    true
-                }
-                R.id.cat_personal -> {
-                    applyCategoryFilter("Personal")
-                    true
-                }
-                R.id.cat_classe -> {
-                    applyCategoryFilter("Classe")
-                    true
-                }
+                R.id.cat_totes    -> { applyCategoryFilter("Totes"); true }
+                R.id.cat_personal -> { applyCategoryFilter("Personal"); true }
+                R.id.cat_classe   -> { applyCategoryFilter("Classe"); true }
                 else -> false
             }
         }
-
         popup.show()
     }
 
     private fun applyCategoryFilter(category: String) {
-        Toast.makeText(this, "Filtrat per: $category", Toast.LENGTH_SHORT).show()
-        Log.d("Filter", "Categoria seleccionada: $category")
-
-        val filteredList = if (category == "Totes") {
-            allTasks
-        } else {
-            allTasks.filter { it.category == category } // Filtrar per categoria
-        }
+        val filteredList = if (category == "Totes") allTasks
+        else allTasks.filter { it.category == category }
         adapter.updateList(filteredList)
     }
 
@@ -173,17 +242,14 @@ class TasksTodayActivity : AppCompatActivity() {
     }
 
     private fun handleItemClick(item: MyItem, position: Int) {
-        Toast.makeText(this, "Has seleccionat: ${item.title}", Toast.LENGTH_SHORT).show()
-        Log.d("RecyclerView", "Item clicat: ${item.title} a la posició $position")
         showItemOptionsDialog(item, position)
     }
 
     private fun showItemOptionsDialog(item: MyItem, position: Int) {
         val options = arrayOf("Eliminar", "Editar", "Cancel·lar")
-
         AlertDialog.Builder(this)
             .setTitle(item.title)
-            .setItems(options) { dialog, which ->
+            .setItems(options) { _, which ->
                 when (which) {
                     0 -> deleteTask(item)
                     1 -> {
@@ -196,76 +262,6 @@ class TasksTodayActivity : AppCompatActivity() {
             .show()
     }
 
-    /**
-     * Elimina una tasca en concret
-     * Aquesta tasca s'elimina a través de la id
-     *
-     * @param item
-     *
-     */
-    private fun deleteTask(item: MyItem) {
-        AlertDialog.Builder(this)
-            .setTitle("Eliminar tasca")
-            .setMessage("Segur que vols eliminar?")
-            .setPositiveButton("Eliminar") { _, _ ->
-                lifecycleScope.launch {
-                    try {
-                        val response = withContext(Dispatchers.IO) {
-                            RetrofitClient.getApi().deleteTask(item.id)
-                        }
-                        if (response.isSuccessful){
-                            Toast.makeText(this@TasksTodayActivity, "Tasca eliminada", Toast.LENGTH_SHORT).show()
-                            loadTasksFromApi()
-                        } else{
-                            Toast.makeText(this@TasksTodayActivity,
-                                "Error eliminant la tasca", Toast.LENGTH_SHORT).show()
-                        }
-                    } catch (e: Exception) {
-                        Toast.makeText(this@TasksTodayActivity, "Error de connexió",
-                            Toast.LENGTH_SHORT).show()
-                    }
-                }
-            }
-            .setNegativeButton("Cancel·lar", null)
-            .show()
-    }
-
-    /**
-     * Elimina totes les tasques
-     *
-     */
-    private fun deleteAllTasks() {
-        AlertDialog.Builder(this)
-            .setTitle("Eliminar totes les tasques")
-            .setMessage("Segur que vols eliminar-les totes?")
-            .setPositiveButton("Eliminar tot") { _, _ ->
-                lifecycleScope.launch {
-                    try {
-                        val response = withContext(Dispatchers.IO) {
-                            RetrofitClient.getApi().deleteAllTasks()
-                        }
-                        if (response.isSuccessful) {
-                            Toast.makeText(this@TasksTodayActivity,
-                                "Totes les tasques eliminades", Toast.LENGTH_SHORT).show()
-                            loadTasksFromApi()
-                        } else {
-                            Toast.makeText(this@TasksTodayActivity,
-                                "Error: ${response.code()}", Toast.LENGTH_SHORT).show()
-                        }
-                    } catch (e: Exception) {
-                        Toast.makeText(this@TasksTodayActivity,
-                            "Error de connexió", Toast.LENGTH_SHORT).show()
-                    }
-                }
-            }
-            .setNegativeButton("Cancel·lar", null)
-            .show()
-    }
-
-    /**
-     * Recargar una llista al tornar a l'activity
-     * Serveix per veure les dades actualitzades
-     */
     override fun onResume() {
         super.onResume()
         loadTasksFromApi()
@@ -273,12 +269,11 @@ class TasksTodayActivity : AppCompatActivity() {
 
     private fun initListeners() {
         btnTestNav.setOnClickListener {
-            val intent = Intent(this, ConfigurationActivity::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, ConfigurationActivity::class.java))
         }
         tvNovaTasca.setOnClickListener {
-            val intent = Intent(this, NewTaskActivity::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, NewTaskActivity::class.java))
+            incrementarEstadistica("afegir") // Incrementa el comptador d'afegir a Firestore
         }
     }
 

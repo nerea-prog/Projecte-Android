@@ -1,4 +1,4 @@
-package com.example.projecte_android
+package com.example.projecte_android.data
 
 object DataSource {
     val items: MutableList<MyItem> = mutableListOf(

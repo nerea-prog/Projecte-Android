@@ -63,4 +63,8 @@ dependencies {
     // FireBase
     implementation(platform("com.google.firebase:firebase-bom:34.11.0"))
     implementation("com.google.firebase:firebase-analytics")
+    // Firebase BoM (gestiona les versions automàticament)
+    implementation(platform("com.google.firebase:firebase-bom:33.7.0"))
+    // Firestore
+    implementation("com.google.firebase:firebase-firestore")
 }

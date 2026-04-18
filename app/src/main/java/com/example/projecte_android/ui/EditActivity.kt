@@ -1,4 +1,4 @@
-package com.example.projecte_android
+package com.example.projecte_android.ui
 
 import android.content.Intent
 import android.os.Bundle
@@ -12,6 +12,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
+import com.example.projecte_android.R
+import com.example.projecte_android.data.MyItem
+import com.example.projecte_android.network.RetrofitClient
+import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -54,7 +58,7 @@ class EditActivity : AppCompatActivity() {
                     RetrofitClient.getApi().getTaskById(taskId)
                 }
                 if (response.isSuccessful) {
-                    val gson = com.google.gson.Gson()
+                    val gson = Gson()
                     val json = response.body()?.string()
                     currentTask = gson.fromJson(json, MyItem::class.java)
                     currentTask?.let {
