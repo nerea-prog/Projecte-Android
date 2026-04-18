@@ -68,5 +68,7 @@
     <string name="accions_realitzades">accions realitzades</string>
     <string name="tasques_per_categoria">tasques per categoria</string>
     <string name="reiniciar_estad_stiques">reiniciar estadístiques</string>
+    <string name="reconeixement_de_veu">Reconeixement de veu</string>
+    <string name="reconeixement_de_veu2">Reconeixement de veu</string>
 
 </resources>

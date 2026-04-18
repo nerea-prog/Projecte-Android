@@ -208,6 +208,17 @@
             android:textColor="@color/brown"
             android:textSize="20sp" />
 
+        <!-- botó de veu -->
+        <ImageButton
+            android:id="@+id/btnVeu"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center_vertical"
+            android:backgroundTint="@color/brown"
+            android:contentDescription="@string/reconeixement_de_veu"
+            android:src="@drawable/ic_mic"
+            app:tint="@color/floral_white" />
+
         <TextView
             android:id="@+id/tvNewList"
             android:layout_width="0dp"
