@@ -52,7 +52,16 @@ class MainUserActivity : AppCompatActivity() {
 
     }
 
-    // Inicialitza el reconeixedor de veu i assigna el listener
+    /**
+     * Inicialitza el reconeixedor de veu i configura els resultats.
+     *
+     * Crea una instància de SpeechRecognizer i defineix un Intent amb la configuració
+     * del reconeixement de veu (idioma i model).
+     *
+     * També assigna un listener per gestionar els resultats de la veu:
+     * - Quan es detecta una frase, es transforma a text i es passa al gestor de comandes.
+     * - Es poden capturar altres estats del reconeixement (errors, inici, fi, etc.).
+     */
     private fun setupVoiceRecognizer() {
         recognizer = SpeechRecognizer.createSpeechRecognizer(this)
         recognizerIntent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
@@ -67,7 +76,15 @@ class MainUserActivity : AppCompatActivity() {
                     ?.lowercase()
                 handleVoiceCommand(spokenText)
             }
-            override fun onError(error: Int) {}
+
+            /**
+             * Es crida quan hi ha un error al reconeixement de veu.
+             * @param error codi d'error
+             */
+            override fun onError(error: Int) {
+                Log.e("VOICE_ERROR", "Error code: $error")
+                Toast.makeText(this@MainUserActivity, "Error de veu: $error", Toast.LENGTH_SHORT).show()
+            }
             override fun onReadyForSpeech(params: Bundle?) {}
             override fun onBeginningOfSpeech() {}
             override fun onRmsChanged(rmsdB: Float) {}
@@ -78,6 +95,14 @@ class MainUserActivity : AppCompatActivity() {
         })
     }
 
+    /**
+     * Es crida quan l'activitat torna a primer pla.
+     *
+     * Actualitza la visibilitat del botó de veu segons la preferència guardada
+     * a SharedPreferences.
+     *
+     * Si la veu està activada, el botó es mostra i si no, s'oculta.
+     */
     override fun onResume() {
         super.onResume()
         // es llegeixen les preferencies guardades
@@ -86,7 +111,11 @@ class MainUserActivity : AppCompatActivity() {
         btnVeu.visibility = if (prefs.getBoolean("veu_activada", false)) View.VISIBLE else View.GONE
     }
 
-    // Comprova si la app ja té permís pel micrófon. Si no, mostra el dialog al usuari per demanar-ho
+    /**
+     * Comprova si l'aplicació té permís per utilitzar el micròfon.
+     *
+     * Si el permís no està concedit, es mostra un diàleg al usuari per demanar-lo.
+     */
     private fun checkMicPermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
             != PackageManager.PERMISSION_GRANTED) {
@@ -97,7 +126,15 @@ class MainUserActivity : AppCompatActivity() {
             )
         }
     }
-
+    /**
+     * Comprova si l'aplicació té permís per utilitzar el micròfon.
+     *
+     * Si el permís no està concedit, es mostra un diàleg al usuari per demanar-lo.
+     *
+     * @param requestCode codi identificador per a saber de qué permís ve la resposta
+     * @param permissions array amb els noms dels permisos
+     * @param grantResults array amb els resultats de la sol·licitud de permís
+     */
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -106,15 +143,25 @@ class MainUserActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == REQUEST_MIC && grantResults.isNotEmpty()
             && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+            setupVoiceRecognizer()
             Toast.makeText(this, "Cal permís de micròfon per usar la veu", Toast.LENGTH_SHORT).show()
             btnVeu.visibility = View.GONE
         }
     }
 
-    // Interpreta les comandes
+    /**
+     * Interpreta les comandes de veu reconegudes.
+     *
+     * Segons el text detectat, navega a diferents pantalles de l'aplicació:
+     * - "configuració": obre la pantalla de configuració.
+     * - "tasques": obre la pantalla de tasques.
+     * - "enrere": torna a la pantalla anterior.
+     *
+     * @param command text reconegut per el reconeixement de veu
+     */
     private fun handleVoiceCommand(command: String?) {
         when {
-            command?.contains("configuraci") == true -> {
+            command?.contains("configuració") == true -> {
                 startActivity(Intent(this, ConfigurationActivity::class.java))
             }
             command?.contains("tasques") == true -> {
@@ -233,6 +280,15 @@ class MainUserActivity : AppCompatActivity() {
     private fun initComponents() {
         btnTestNav = findViewById(R.id.btnTestNav)
         btnVeu = findViewById(R.id.btnVeu)
+    }
+
+    /**
+     * Es crida quan l'activitat es tanca.
+     * Es destroien els recursos del reconeixement de veu.
+     */
+    override fun onDestroy() {
+        super.onDestroy()
+        recognizer.destroy()
     }
 }
 

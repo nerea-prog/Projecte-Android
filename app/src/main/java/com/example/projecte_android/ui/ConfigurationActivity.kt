@@ -35,7 +35,18 @@ class ConfigurationActivity : AppCompatActivity() {
         setupVeuSwitch()
     }
 
-    // Configura el switch de veu: llegeix la preferència guardada i escolta els canvis
+    /**
+     * Configura el switch que activa o desactiva la veu a l'aplicació.
+     *
+     * Llegeix la preferència guardada a SharedPreferences per saber si la veu
+     * està activada i posa el switch en el mateix estat.
+     *
+     * Quan l'usuari canvia el switch, es guarda el nou valor a les preferències i
+     * es mostra un missatge indicant si la veu s'ha activat o desactivat.
+     *
+     * Això permet que la configuració de veu es mantingui encara que es tanqui
+     * l'aplicació.
+     */
     private fun setupVeuSwitch() {
         val prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
         switchVeu.isChecked = prefs.getBoolean(KEY_VEU, false)
